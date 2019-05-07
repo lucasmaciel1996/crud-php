@@ -39,7 +39,7 @@
 
     <footer>
         <div>
-            <p>Desenvolvido por Carlos Eduardo</p>
+            <p>Desenvolvido por Carlos Eduardo Soares</p>
         </div>
     </footer>
 </body>
