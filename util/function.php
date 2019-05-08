@@ -22,45 +22,48 @@
      
      return json_encode($res);
    }
-   function create($nome,$email,$login,$senha)
+   function create($nome,$login)
    {
-     //TRUE FAZ UPDATE
-     if(mysql_execute("SELECT * FROM ws_user WHERE nome=$nome AND email=$email AND login=$login") == "Nenhum registro")
+     //FALSE FAZ UPDATE
+     if(empty(mysql_execute("SELECT * FROM ws_user WHERE nome='$nome' AND login='$login'")))
      {
+        
         $sql="INSERT INTO ws_user(nome,email,login,senha)VALUES('$nome','$email','$login',md5('$senha'))";
         $res = mysql_execute($sql);
       
           if($res == NULL)
           {
-          $sql ="SELECT * FROM ws_user ORDER BY   create_at DESC LIMIT 1";
-          $res = mysql_execute($sql);
+            $sql ="SELECT * FROM ws_user ORDER BY   create_at DESC LIMIT 1";
+            $res = mysql_execute($sql);
           
-          return json_encode($res);
+            return json_encode($res);
           }else{
             echo "Erro ".var_dump($res);
           } 
         
       }else{
         $sql ="UPDATE ws_user SET nome=$nome, email=$email,senha=$senha";
-        $res = mysql_execute($sql);
+        mysql_execute($sql);
+        $res = mysql_execute("SELECT * FROM ws_user WHERE nome='$nome' AND email='$email' AND login='$login'");
+     
         return json_encode($res);
       } 
    }
 
-   function delete($table,$condition)
+   function delete($table,$id)
    {
-      $sql = "DELETE FROM $table WHERE $condition";
-      $res = mysql_execute($sql);
-
-     if($res)
-     {
-      $sql ="SELECT $ FROM $table ORDER BY DESC LIMIT 1";
-      $res = mysql_execute($sql);
       
-      return var_dump($res);
-     }
-     echo "Erro";
+     if(empty(mysql_execute("SELECT * FROM ws_user WHERE id_user= $id")))
+     {
+        return "Não há registro para este cadatrato"; 
+     }else{
+       $sql = "DELETE FROM $table WHERE id_user = $id";
+       mysql_execute($sql);
+        
+        return "Usuarios excluido";
      
+     }
+      
    }
  
 ?>

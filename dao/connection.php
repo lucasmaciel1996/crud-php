@@ -3,9 +3,9 @@
   function conecta_DB()
   {
     $user='root';
-    $password='Qu@d2018';
+    $password='my-123456';
     $database='crud_php';
-    $host='172.17.0.3';
+    $host='172.17.0.2';
 
     $conexao = mysqli_connect($host,$user,$password,$database);
     if(!$conexao)
